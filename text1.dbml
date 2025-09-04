@@ -1,0 +1,76 @@
+enum user_role {
+    ADMIN
+    MECHANIC
+    CUSTOMER
+}
+
+Table usuarios {
+    id serial [pk]
+    username varchar(50) [not null, unique]
+    email varchar(100) [not null, unique]
+    password varchar(255) [not null]
+    direccion varchar(255)
+    telefono varchar(15)
+    role user_role [not null] 
+    is_active boolean [not null,default: true]
+    created_at timestamp [default: `now()`, not null] //fecha de creacion
+    updated_at timestamp [default: `now()`] //fecha de actualizacion
+    metodo_pago varchar [not null]
+}
+
+Table producto {
+    id serial [pk]
+    electrodomesticos varchar
+    deportes varchar
+    ropa varchar
+    video_juegos varchar 
+    herramientas varchar
+    juguetes varchar
+    accesorios varchar
+
+}
+
+Table metodo_pago {
+    id serial [pk]
+    tipo_banco varchar [not null, unique]
+    tipo_cuenta varchar [not null, unique]
+    tipo_tarjeta varchar [not null, unique]
+    usuario_id int [ref: > usuarios.id, not null] // Relacion con la tabla usuarios
+    
+    
+}
+
+Table redireccionar {
+    id serial [pk]
+    busqueda varchar(255)
+    compras_frecuentes varchar(255)
+    usuario_id int [ref: > usuarios.id] // Relacion con la tabla usuarios
+    producto_id int [ref: > producto.id] // Relacion con la tabla productos
+}
+
+
+Table notificaciones {
+    id serial [pk]
+    tipo_notificacion varchar(100) [not null]
+    mensaje text [not null]
+    usuario_id int [ref: > usuarios.id, not null] // Relacion con la tabla usuarios
+    creado_en timestamp [default: `now()`, not null] //fecha de creacion
+    leido boolean [default: false, not null] // Indica si la notificacion ha sido leida
+}
+
+Table envios {
+    id serial [pk]
+    direccion_envio varchar(255) [not null]
+    fecha_envio timestamp [default: `now()`, not null] //fecha de envio
+    estado_envio varchar(50) [not null] //estado del envio
+    usuario_id int [ref: > usuarios.id, not null] // Relacion con la tabla usuarios
+}
+
+Table comentarios {
+    id serial [pk]
+    contenido text [not null]
+    calificacion int [not null, note: 'Calificación del 1 al 5']
+    usuario_id int [ref: > usuarios.id, not null] // Relacion con la tabla usuarios
+    producto_id int [ref: > producto.id, not null] // Relacion con la tabla productos
+    creado_en timestamp [default: `now()`, not null] //fecha de creacion
+}
