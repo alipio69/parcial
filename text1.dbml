@@ -1,12 +1,12 @@
 enum UserRole {
-    ADMIN
-    MECHANIC
-    CUSTOMER
+    admin
+    mechanic
+    customer
 }
 
 Table Usuarios {
     id serial [pk]
-    username varchar(50) [not null, unique]
+    user_name varchar(50) [not null, unique]
     email varchar(100) [not null, unique]
     password varchar(255) [not null]
     direccion varchar(255)
@@ -45,7 +45,7 @@ Table Redireccionar {
     busqueda varchar(255)
     compras_frecuentes varchar(255)
     usuario_id int [ref: > Usuarios.id] // Relacion con la tabla usuarios
-    Producto_id int [ref: > Producto.id] // Relacion con la tabla productos
+    producto_id int [ref: > Producto.id] // Relacion con la tabla productos
 }
 
 
@@ -71,6 +71,6 @@ Table Comentarios {
     contenido text [not null]
     calificacion int [not null, note: 'Calificación del 1 al 5']
     usuario_id int [ref: > Usuarios.id, not null] // Relacion con la tabla usuarios
-    Producto_id int [ref: > Producto.id, not null] // Relacion con la tabla productos
+    producto_id int [ref: > Producto.id, not null] // Relacion con la tabla productos
     creado_en timestamp [default: `now()`, not null] //fecha de creacion
 }
