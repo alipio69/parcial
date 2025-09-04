@@ -55,7 +55,7 @@ Table Notificaciones {
     mensaje text [not null]
     usuario_id int [ref: > Usuarios.id, not null] // Relacion con la tabla usuarios
     creado_en timestamp [default: `now()`, not null] //fecha de creacion
-    leido boolean [default: false, not null] // Indica si la notificacion ha sido leida
+    visto boolean [default: false, not null] // Indica si la notificacion ha sido leida
 }
 
 Table Envios {
