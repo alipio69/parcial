@@ -39,17 +39,18 @@ Table MetodoPago {
     
 }
 
-ref: Usuarios.id_usuario < MetodoPago.usuario_id
+ref: Usuarios.id_usuario < MetodoPago.id_metodo_pago
 
 Table Redireccionar {
     id_redireccionar serial [pk]
     busqueda varchar(255)
     compras_frecuentes varchar(255)
     usuario_id int  // Relacion con la tabla usuarios
-    producto_id int [ref: > Producto.id_producto] // Relacion con la tabla productos
+    
 }
 
-ref: Usuarios.id_usuario < Redireccionar.usuario_id
+ref: Redireccionar.id_redireccionar> Producto.id_producto
+ref: Usuarios.id_usuario < Redireccionar.id_redireccionar
 
 Table Notificaciones {
     id_notificaiones serial [pk]
@@ -60,7 +61,7 @@ Table Notificaciones {
     visto boolean [default: false, not null] // Indica si la notificacion ha sido leida
 }
 
-ref: Usuarios.id_usuario < Notificaciones.usuario_id
+ref: Producto.id_producto < Notificaciones.id_notificaiones
 
 Table Envios {
     id_envios serial [pk]
@@ -70,7 +71,7 @@ Table Envios {
     usuario_id int [not null] // Relacion con la tabla usuarios
 }
 
-ref: Usuarios.id_usuario < Envios.usuario_id
+ref: Usuarios.id_usuario < Envios.id_envios
 
 Table Comentarios {
     id_comentarios serial [pk]
@@ -81,6 +82,6 @@ Table Comentarios {
     creado_en timestamp [default: `now()`, not null] //fecha de creacion
 }
 
-ref: Usuarios.id_usuario < Comentarios.usuario_id
-ref: Producto.id_producto < Comentarios.producto_id
+
+ref: Producto.id_producto < Comentarios.id_comentarios
 
